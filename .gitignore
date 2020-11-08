@@ -1,3 +1,4 @@
-/rust-parser/target
+rust-parser/target
+rust-parser/pkg
 Cargo.lock
 *.code-workspace
