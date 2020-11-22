@@ -22,6 +22,7 @@ export async function main(): Promise<void> {
       // if (!(await isRecipeAlreadyIndexed(slug))) {
       // }
     }
+    // await sendToRecipeParser("salade-quinoa-pois-chiches-courgettes")
   }
 }
 
@@ -43,6 +44,8 @@ export async function getAllRecipesSlugs(
   const result = await fetch(url);
 
   const slugsList = parseAllRecipesSlugs(await result.text());
-  log.info(`Slug list for page n°${page} retrieved: ${slugsList}`);
-  return slugsList;
+  return {
+    page,
+    slugsList,
+  };
 }

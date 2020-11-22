@@ -9,6 +9,6 @@ export const parseIngredient = (text: string): Ingredient => {
 
   return {
     label,
-    quantity: quantity ? Number(quantity.replace(/,/g, ".")) : null,
+    quantity: quantity ? Number(quantity.replace(/,/g, ".")) : undefined,
   };
 };

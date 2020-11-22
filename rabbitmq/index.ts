@@ -58,7 +58,7 @@ export async function initRabbit(): Promise<void> {
           }...`,
         );
         try {
-          await worker.work(new TextDecoder().decode(data));
+          await worker.work(JSON.parse(new TextDecoder().decode(data)));
           await channel.ack({ deliveryTag: args.deliveryTag });
           log.info(
             `Handled message from queue: ${worker.queue}, data: ${
