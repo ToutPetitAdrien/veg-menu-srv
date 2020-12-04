@@ -1,0 +1,45 @@
+{
+  "indices": {
+    "recipes": {
+      "searchableAttributes": ["title", "description", "ingredients"],
+      "attributesForFaceting": [
+        "filterOnly(slug)",
+        "filterOnly(preparationTime)",
+        "filterOnly(cookingTime)",
+        "filterOnly(createdAt)",
+        "filterOnly(createdAtTimestamp)"
+      ],
+      "replicas": ["recipes_date_desc"]
+    },
+    "recipes_date_desc": {
+      "ranking": [
+        "desc(createdAtTimestamp)",
+        "typo",
+        "geo",
+        "words",
+        "filters",
+        "proximity",
+        "attribute",
+        "exact",
+        "custom"
+      ]
+    },
+    "menus": {
+      "searchableAttributes": ["title", "description", "date"],
+      "replicas": ["menus_date_desc"]
+    },
+    "menus_date_desc": {
+      "ranking": [
+        "desc(dateTimestamp)",
+        "typo",
+        "geo",
+        "words",
+        "filters",
+        "proximity",
+        "attribute",
+        "exact",
+        "custom"
+      ]
+    }
+  }
+}

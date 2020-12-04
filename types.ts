@@ -35,3 +35,8 @@ export interface Ingredient {
   quantity?: number;
   label: string;
 }
+
+export enum Index {
+  Recipes = "recipes",
+  Menus = "menus",
+}
