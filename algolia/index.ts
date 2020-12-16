@@ -1,13 +1,20 @@
-import algoliasearch from "https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch.esm.browser.js";
-import { config } from "https://deno.land/x/dotenv/mod.ts";
+import algoliasearch from "../../algoliasearch-client-javascript/packages/algoliasearch/dist/algoliasearch.esm.browser.js";
 
-const { ALGOLIASEARCH_APPLICATION_ID, ALGOLIASEARCH_ADMIN_API_KEY } = config({ safe: true });
+import { config } from "https://deno.land/x/dotenv/mod.ts";
+import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
+
+const { ALGOLIASEARCH_APPLICATION_ID, ALGOLIASEARCH_ADMIN_API_KEY } = config(
+  { safe: true },
+);
 
 const algoliaConfig = JSON.parse(Deno.readTextFileSync("algolia/config.json"));
 import { Index } from "../types.ts";
 import * as fetch from "../requests/index.ts";
 
-const client = algoliasearch(ALGOLIASEARCH_APPLICATION_ID, ALGOLIASEARCH_ADMIN_API_KEY);
+const client = algoliasearch(
+  ALGOLIASEARCH_APPLICATION_ID,
+  ALGOLIASEARCH_ADMIN_API_KEY,
+);
 
 type ResponsePutSettings = {
   updatedAt: string;
@@ -26,9 +33,13 @@ export async function initAlgolia(): Promise<void> {
   }
 }
 
-export async function putToAlgolia(path: string, payload: any): Promise<ResponsePutSettings> {
-  const baseUrl: string = `https://${ALGOLIASEARCH_APPLICATION_ID}-dsn.algolia.net/1`;
-	const url: string = baseUrl + path;
+export async function putToAlgolia(
+  path: string,
+  payload: any,
+): Promise<ResponsePutSettings> {
+  const baseUrl: string =
+    `https://${ALGOLIASEARCH_APPLICATION_ID}-dsn.algolia.net/1`;
+  const url: string = baseUrl + path;
   const response = await fetch.put<unknown, ResponsePutSettings>(url, payload, {
     headers: {
       "X-Algolia-API-Key": ALGOLIASEARCH_ADMIN_API_KEY,
@@ -38,4 +49,13 @@ export async function putToAlgolia(path: string, payload: any): Promise<Response
   return response;
 }
 
-initAlgolia();
+export async function saveObjects(
+  index: string,
+  objects: unknown[],
+): Promise<void> {
+  log.info(
+    `Indexing {yellow ${objects.length}} objects in index {yellow ${index}}...`,
+  );
+
+  await indices[index].saveObjects(objects).wait();
+}

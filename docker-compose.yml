@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6380:6379"
+    command: redis-server --requirepass adminadmin
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"

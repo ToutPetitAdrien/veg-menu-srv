@@ -2,7 +2,7 @@ import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
 
 import { sendToQueue } from "../rabbitmq/index.ts";
 import { Queue } from "../types.ts";
-// import { sendToRecipeIndexer } from './recipeIndexer'
+import { sendToRecipeIndexer } from './recipeIndexer.ts';
 import { dateToTimestamp } from "../utils.ts";
 import { parseRecipe } from "../parsers/recipe.ts";
 import { Recipe } from "../types.ts";
@@ -16,7 +16,7 @@ export async function sendToRecipeParser(slug: string): Promise<void> {
 
 export async function work(slug: string): Promise<void> {
   const recipe = await getRecipe(slug);
-  // await sendToRecipeIndexer(recipe)
+  await sendToRecipeIndexer(recipe);
 }
 
 export async function getRecipe(slug: string): Promise<Recipe> {

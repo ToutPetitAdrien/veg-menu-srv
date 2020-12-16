@@ -1,9 +1,10 @@
 import { initRabbit } from "./rabbitmq/index.ts";
-import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
+import { initAlgolia } from "./algolia/index.ts";
+import { initRedis } from "./redis/index.ts";
 
 async function execScript(scriptPath: string) {
   const script = await import(scriptPath);
-  await Promise.all([initRabbit()]);
+  await Promise.all([initRedis(), initRabbit(), initAlgolia()]);
   await script.main();
 }
 

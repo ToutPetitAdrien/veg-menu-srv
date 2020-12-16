@@ -1,8 +1,11 @@
 import { AmqpChannel, connect } from "https://deno.land/x/amqp/mod.ts";
+import { config } from "https://deno.land/x/dotenv/mod.ts";
 import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
 import { Queue } from "../types.ts";
 import * as path from "https://deno.land/std@0.76.0/path/mod.ts";
 import * as fs from "https://deno.land/std@0.76.0/fs/mod.ts";
+
+const { RABBIT_URL } = config({ safe: true });
 
 let channel: AmqpChannel;
 
@@ -17,7 +20,7 @@ async function initTopology(): Promise<void> {
 }
 
 export async function initRabbit(): Promise<void> {
-  const conn = await connect("amqp://localhost:5672");
+  const conn = await connect(RABBIT_URL);
   channel = await conn.openChannel();
 
   await initTopology();

@@ -18,7 +18,7 @@ export interface Ingredient {
 
 export interface Recipe {
   title: string;
-  slug?: string;
+  slug: string;
   description: string;
   photoUrl: string;
   preparationTime: number;

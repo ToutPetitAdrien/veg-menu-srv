@@ -1,4 +1,4 @@
-rust-parser/target
-rust-parser/pkg
-Cargo.lock
 *.code-workspace
+.DS_Store
+
+.env
