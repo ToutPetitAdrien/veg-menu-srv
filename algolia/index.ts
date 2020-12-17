@@ -1,4 +1,4 @@
-import algoliasearch from "../../algoliasearch-client-javascript/packages/algoliasearch/dist/algoliasearch.esm.browser.js";
+import algoliasearch from "https://cdn.jsdelivr.net/npm/deno-algoliasearch2@4.8.3/dist/algoliasearch.esm.browser.js";
 
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
