@@ -3,7 +3,7 @@ import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
 import { Queue } from "../types.ts";
 import * as fs from "https://deno.land/std@0.76.0/fs/mod.ts";
 
-const CLOUDAMQP_URL = Deno.env.get("CLOUDAMQP_URL");
+const { CLOUDAMQP_URL } = Deno.env.toObject();
 
 let channel: AmqpChannel;
 

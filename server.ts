@@ -5,7 +5,7 @@ import { initAlgolia } from "./algolia/index.ts";
 import { initRedis } from "./redis/index.ts";
 import { initHttp } from "./http/index.ts";
 
-const PORT = Deno.env.get("PORT");
+const { PORT } = Deno.env.toObject();
 
 Promise.all([initHttp(), initRedis(), initRabbit(), initAlgolia()])
   .then(([app]) => {
