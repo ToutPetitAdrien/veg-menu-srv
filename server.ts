@@ -15,7 +15,7 @@ Promise.all([initHttp(), initRedis(), initRabbit()])
           "localhost"}:${port}`,
       );
     });
-    app.listen({ port: +PORT });
+    app.listen({ port: +PORT || 3000 });
   })
   .catch((error) => {
     log.error(error);
