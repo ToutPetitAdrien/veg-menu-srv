@@ -7,7 +7,7 @@ import { initHttp } from "./http/index.ts";
 
 const { PORT } = Deno.env.toObject();
 
-Promise.all([initHttp(), initRedis()])
+Promise.all([initHttp(), initRedis(), initRabbit()])
   .then(([app]) => {
     app.addEventListener("listen", ({ hostname, port, secure }) => {
       log.info(
