@@ -13,7 +13,7 @@ const {
 
 const connectOptions = {
   hostname: CLOUDAMQP_HOSTNAME,
-  port: CLOUDAMQP_PORT,
+  port: +CLOUDAMQP_PORT,
   username: CLOUDAMQP_USERNAME,
   password: CLOUDAMQP_PASSWORD,
   vhost: CLOUDAMQP_VHOST,
