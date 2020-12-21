@@ -21,8 +21,12 @@ async function initTopology(): Promise<void> {
 
 export async function initRabbit(): Promise<void> {
   console.log("coucou0");
-  const conn = await connect(CLOUDAMQP_URL);
-  channel = await conn.openChannel();
+  try {
+    const conn = await connect(CLOUDAMQP_URL);
+    channel = await conn.openChannel();
+  } catch (error) {
+    throw new Error(error);
+  }
 
   console.log("coucou1");
 
