@@ -11,26 +11,33 @@ async function initTopology(): Promise<void> {
   if (!channel) {
     throw new Error("Call initRabbit first");
   }
+  console.log("coucou8");
 
   for (const queue of Object.values(Queue)) {
+    console.log("coucou9");
     await channel.declareQueue({ queue, durable: true });
   }
 }
 
 export async function initRabbit(): Promise<void> {
+  console.log("coucou0");
   const conn = await connect(CLOUDAMQP_URL);
   channel = await conn.openChannel();
+
+  console.log("coucou1");
 
   await initTopology();
 
   let workerPaths: Array<string> = [];
   for (const file of fs.expandGlobSync("workers/**/*.ts")) {
     workerPaths = [...workerPaths, file.path];
+    console.log("coucou2");
   }
 
   const workers = workerPaths.map(async (p: string) => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const worker = await import(p);
+    console.log("coucou3");
 
     const workerShortName = p.match(/\/(workers\/[^/]+\.ts$)/)![1];
 
@@ -48,6 +55,8 @@ export async function initRabbit(): Promise<void> {
 
     return worker;
   });
+
+  console.log('coucou4')
 
   for await (const worker of workers) {
     await channel.consume(
