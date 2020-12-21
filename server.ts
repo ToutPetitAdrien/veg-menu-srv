@@ -6,6 +6,7 @@ import { initAlgolia } from "./algolia/index.ts";
 import { initRedis } from "./redis/index.ts";
 import { initHttp } from "./http/index.ts";
 
+console.log(config({ safe: true }));
 const { PORT } = config({ safe: true });
 
 Promise.all([initHttp(), initRedis(), initRabbit(), initAlgolia()])
