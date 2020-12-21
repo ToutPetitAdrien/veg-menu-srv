@@ -2,6 +2,7 @@ import { connect, parseURL } from "https://deno.land/x/redis/mod.ts";
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
 
+console.log(config({ safe: true }), 'logogoogoogogogogogogo');
 const { REDIS_URL } = config({ safe: true });
 const options = parseURL(REDIS_URL);
 const client = connect(options);
