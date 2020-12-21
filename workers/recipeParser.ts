@@ -2,7 +2,7 @@ import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
 
 import { sendToQueue } from "../rabbitmq/index.ts";
 import { Queue } from "../types.ts";
-import { sendToRecipeIndexer } from './recipeIndexer.ts';
+import { sendToRecipeIndexer } from "./recipeIndexer.ts";
 import { dateToTimestamp } from "../utils.ts";
 import { parseRecipe } from "../parsers/recipe.ts";
 import { Recipe } from "../types.ts";

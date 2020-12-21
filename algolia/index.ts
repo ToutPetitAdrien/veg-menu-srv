@@ -1,14 +1,12 @@
 import algoliasearch from "https://cdn.jsdelivr.net/npm/deno-algoliasearch2@4.8.3/dist/algoliasearch.esm.browser.js";
-
-import { config } from "https://deno.land/x/dotenv/mod.ts";
 import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
 
-const { ALGOLIASEARCH_APPLICATION_ID, ALGOLIASEARCH_API_KEY } = config(
-  { safe: true },
+const ALGOLIASEARCH_APPLICATION_ID = Deno.env.get(
+  "ALGOLIASEARCH_APPLICATION_ID",
 );
+const ALGOLIASEARCH_API_KEY = Deno.env.get("ALGOLIASEARCH_API_KEY");
 
 const algoliaConfig = JSON.parse(Deno.readTextFileSync("algolia/config.json"));
-import { Index } from "../types.ts";
 import * as fetch from "../requests/index.ts";
 
 const client = algoliasearch(

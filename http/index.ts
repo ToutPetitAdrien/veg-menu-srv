@@ -1,26 +1,26 @@
-import { Application } from 'https://deno.land/x/oak/mod.ts';
+import { Application } from "https://deno.land/x/oak/mod.ts";
 import { oakCors } from "https://deno.land/x/cors/mod.ts";
 
 export async function initHttp() {
   const app = new Application();
-  
+
   app.use(
     oakCors({
       origin: "*",
       credentials: true,
       allowedHeaders:
-        'Authorization, Origin, X-Requested-With, Content-Type, Accept',
+        "Authorization, Origin, X-Requested-With, Content-Type, Accept",
     }),
   );
   app.use(async (ctx, next) => {
     try {
-      await next()
+      await next();
     } catch (err) {
       ctx.response.body = {
-        type: err.message || '',
+        type: err.message || "",
         original: err,
-      }
-      ctx.response.status = err.status || 500
+      };
+      ctx.response.status = err.status || 500;
     }
   });
   // Logger

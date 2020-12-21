@@ -1,11 +1,9 @@
 import { AmqpChannel, connect } from "https://deno.land/x/amqp/mod.ts";
-import { config } from "https://deno.land/x/dotenv/mod.ts";
 import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
 import { Queue } from "../types.ts";
-import * as path from "https://deno.land/std@0.76.0/path/mod.ts";
 import * as fs from "https://deno.land/std@0.76.0/fs/mod.ts";
 
-const { CLOUDAMQP_URL } = config({ safe: true });
+const CLOUDAMQP_URL = Deno.env.get("CLOUDAMQP_URL");
 
 let channel: AmqpChannel;
 
