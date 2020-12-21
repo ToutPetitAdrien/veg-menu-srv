@@ -5,7 +5,7 @@ import { Queue } from "../types.ts";
 import * as path from "https://deno.land/std@0.76.0/path/mod.ts";
 import * as fs from "https://deno.land/std@0.76.0/fs/mod.ts";
 
-const { RABBIT_URL } = config({ safe: true });
+const { CLOUDAMQP_URL } = config({ safe: true });
 
 let channel: AmqpChannel;
 
@@ -20,7 +20,7 @@ async function initTopology(): Promise<void> {
 }
 
 export async function initRabbit(): Promise<void> {
-  const conn = await connect(RABBIT_URL);
+  const conn = await connect(CLOUDAMQP_URL);
   channel = await conn.openChannel();
 
   await initTopology();

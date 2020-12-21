@@ -3,7 +3,7 @@ import algoliasearch from "https://cdn.jsdelivr.net/npm/deno-algoliasearch2@4.8.
 import { config } from "https://deno.land/x/dotenv/mod.ts";
 import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
 
-const { ALGOLIASEARCH_APPLICATION_ID, ALGOLIASEARCH_ADMIN_API_KEY } = config(
+const { ALGOLIASEARCH_APPLICATION_ID, ALGOLIASEARCH_API_KEY } = config(
   { safe: true },
 );
 
@@ -13,7 +13,7 @@ import * as fetch from "../requests/index.ts";
 
 const client = algoliasearch(
   ALGOLIASEARCH_APPLICATION_ID,
-  ALGOLIASEARCH_ADMIN_API_KEY,
+  ALGOLIASEARCH_API_KEY,
 );
 
 type ResponsePutSettings = {
@@ -42,7 +42,7 @@ export async function putToAlgolia(
   const url: string = baseUrl + path;
   const response = await fetch.put<unknown, ResponsePutSettings>(url, payload, {
     headers: {
-      "X-Algolia-API-Key": ALGOLIASEARCH_ADMIN_API_KEY,
+      "X-Algolia-API-Key": ALGOLIASEARCH_API_KEY,
       "X-Algolia-Application-Id": ALGOLIASEARCH_APPLICATION_ID,
     },
   });
