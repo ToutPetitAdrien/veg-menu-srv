@@ -1,4 +1,4 @@
-import { AmqpChannel, connect, AmqpConnectOptions } from "https://deno.land/x/amqp/mod.ts";
+import { AmqpChannel, connect } from "https://deno.land/x/amqp/mod.ts";
 import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
 import { Queue } from "../types.ts";
 import * as fs from "https://deno.land/std@0.76.0/fs/mod.ts";
@@ -11,13 +11,15 @@ const {
   CLOUDAMQP_VHOST,
 } = Deno.env.toObject();
 
-const connectOptions = AmqpConnectOptions({
+const connectOptions = {
   hostname: CLOUDAMQP_HOSTNAME,
   port: CLOUDAMQP_PORT,
   username: CLOUDAMQP_USERNAME,
   password: CLOUDAMQP_PASSWORD,
   vhost: CLOUDAMQP_VHOST,
-})
+  heartbeatInterval: undefined,
+  frameMax: undefined,
+}
 
 let channel: AmqpChannel;
 
