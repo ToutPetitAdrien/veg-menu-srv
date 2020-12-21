@@ -17,7 +17,7 @@ Promise.all([initHttp(), initRedis(), initRabbit(), initAlgolia()])
         }:${port}`
       );
     });
-    app.listen({ port: PORT });
+    app.listen({ port: +PORT });
   })
   .catch((error) => {
     log.error(error)
