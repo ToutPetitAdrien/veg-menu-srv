@@ -10,7 +10,7 @@ export async function initRedis(): Promise<void> {
   if (redis.isConnected) {
     return;
   }
-  throw new Error("Call initRedis first");
+  return Promise.reject(new Error("Call initRedis first"));
 }
 
 export async function setKey(key: string, data: unknown): Promise<void> {

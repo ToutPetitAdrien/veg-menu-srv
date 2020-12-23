@@ -4,22 +4,8 @@ import { Queue } from "../types.ts";
 import * as fs from "https://deno.land/std@0.76.0/fs/mod.ts";
 
 const {
-  CLOUDAMQP_HOSTNAME,
-  CLOUDAMQP_PORT,
-  CLOUDAMQP_USERNAME,
-  CLOUDAMQP_PASSWORD,
-  CLOUDAMQP_VHOST,
+  CLOUDAMQP_URL,
 } = Deno.env.toObject();
-
-const connectOptions = {
-  hostname: CLOUDAMQP_HOSTNAME,
-  port: +CLOUDAMQP_PORT,
-  username: CLOUDAMQP_USERNAME,
-  password: CLOUDAMQP_PASSWORD,
-  vhost: CLOUDAMQP_VHOST,
-  heartbeatInterval: undefined,
-  frameMax: undefined,
-}
 
 let channel: AmqpChannel;
 
@@ -27,37 +13,30 @@ async function initTopology(): Promise<void> {
   if (!channel) {
     throw new Error("Call initRabbit first");
   }
-  console.log("coucou8");
 
   for (const queue of Object.values(Queue)) {
-    console.log("coucou9");
     await channel.declareQueue({ queue, durable: true });
   }
 }
 
 export async function initRabbit(): Promise<void> {
-  console.log("coucou0");
   try {
-    const conn = await connect(connectOptions);
+    const conn = await connect(CLOUDAMQP_URL);
     channel = await conn.openChannel();
   } catch (error) {
-    throw new Error(error);
+    return Promise.reject(error);
   }
-
-  console.log("coucou1");
 
   await initTopology();
 
   let workerPaths: Array<string> = [];
   for (const file of fs.expandGlobSync("workers/**/*.ts")) {
     workerPaths = [...workerPaths, file.path];
-    console.log("coucou2");
   }
 
-  const workers = workerPaths.map(async (p: string) => {
+  const workers = await Promise.all(workerPaths.map(async (p: string) => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const worker = await import(p);
-    console.log("coucou3");
 
     const workerShortName = p.match(/\/(workers\/[^/]+\.ts$)/)![1];
 
@@ -74,9 +53,7 @@ export async function initRabbit(): Promise<void> {
     }
 
     return worker;
-  });
-
-  console.log('coucou4')
+  }));
 
   for await (const worker of workers) {
     await channel.consume(

@@ -1,5 +1,3 @@
-import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
-
 import { sendToQueue } from "../rabbitmq/index.ts";
 import { Queue } from "../types.ts";
 import { sendToRecipeIndexer } from "./recipeIndexer.ts";

@@ -1,15 +1,26 @@
-version: "3"
+version: "3.7"
 
 services:
   redis:
     image: redis
     restart: always
     ports:
-      - "6380:6379"
+      - "6379:6379"
     command: redis-server --requirepass adminadmin
+
   rabbitmq:
     image: rabbitmq:3-management
     restart: always
     ports:
       - "5672:5672"
       - "15672:15672"
+
+  deno:
+    image: deno-docker
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+    env_file:
+      - .env

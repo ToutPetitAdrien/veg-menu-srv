@@ -7,17 +7,20 @@ import { initHttp } from "./http/index.ts";
 
 const { PORT } = Deno.env.toObject();
 
-Promise.all([initHttp(), initRedis()])
-  .then(([app]) => {
+(async () => {
+  try {
+    const [app, ...rest] = await Promise.all(
+      [initHttp(), initRedis(), initRabbit(), initAlgolia()],
+    );
     app.addEventListener("listen", ({ hostname, port, secure }) => {
       log.info(
         `Listening on: ${secure ? "https://" : "http://"}${hostname ??
           "localhost"}:${port}`,
       );
     });
-    app.listen({ port: +PORT || 3000 });
-  })
-  .catch((error) => {
+    app.listen({ port: +PORT });
+  } catch (error) {
     log.error(error);
     log.error(`Could not init server`);
-  });
+  }
+})();
