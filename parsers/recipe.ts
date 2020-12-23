@@ -90,7 +90,7 @@ export const parseRecipe = (
     photoUrl,
     preparationTime,
     cookingTime,
-    servings,
+    servings: 2,
     ingredients,
     otherIngredients,
     instructions,
