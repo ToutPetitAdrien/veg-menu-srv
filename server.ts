@@ -1,4 +1,4 @@
-import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
+import * as log from "https://deno.land/std@0.82.0/log/mod.ts";
 
 import { initRabbit } from "./rabbitmq/index.ts";
 import { initAlgolia } from "./algolia/index.ts";
