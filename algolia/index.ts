@@ -1,5 +1,5 @@
 import algoliasearch from "https://cdn.jsdelivr.net/npm/deno-algoliasearch2@4.8.3/dist/algoliasearch.esm.browser.js";
-import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
+import * as log from "https://deno.land/std@0.82.0/log/mod.ts";
 
 const { ALGOLIASEARCH_APPLICATION_ID } = Deno.env.toObject();
 const { ALGOLIASEARCH_API_KEY } = Deno.env.toObject();
@@ -50,8 +50,10 @@ export async function saveObjects(
   objects: unknown[],
 ): Promise<void> {
   log.info(
-    `Indexing {yellow ${objects.length}} objects in index {yellow ${index}}...`,
+    `Indexing ${objects.length} objects in index ${index}...`,
   );
 
-  await indices[index].saveObjects(objects).wait();
+  indices[index].saveObjects(objects).then(({ objectIDs }: any) => {
+    log.info(`${objectIDs} has been saved in Algolia`)
+  });
 }

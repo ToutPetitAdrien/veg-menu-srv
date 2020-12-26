@@ -19,10 +19,10 @@ export interface Ingredient {
 export interface Recipe {
   title: string;
   slug: string;
-  description: string;
-  photoUrl: string;
-  preparationTime: number;
-  cookingTime: number;
+  description?: string;
+  photoUrl?: string;
+  preparationTime?: number;
+  cookingTime?: number;
   servings: number;
   ingredients: Array<Ingredient>;
   otherIngredients: Array<Ingredient>;

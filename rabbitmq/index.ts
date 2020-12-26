@@ -1,7 +1,7 @@
 import { AmqpChannel, connect } from "https://deno.land/x/amqp/mod.ts";
-import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
+import * as log from "https://deno.land/std@0.82.0/log/mod.ts";
 import { Queue } from "../types.ts";
-import * as fs from "https://deno.land/std@0.76.0/fs/mod.ts";
+import * as fs from "https://deno.land/std@0.82.0/fs/mod.ts";
 
 const {
   CLOUDAMQP_URL,
@@ -59,19 +59,9 @@ export async function initRabbit(): Promise<void> {
     await channel.consume(
       { queue: worker.queue },
       async (args, props, data) => {
-        log.info(
-          `Handling message from queue: ${worker.queue}, data: ${
-            new TextDecoder().decode(data)
-          }...`,
-        );
         try {
           await worker.work(JSON.parse(new TextDecoder().decode(data)));
           await channel.ack({ deliveryTag: args.deliveryTag });
-          log.info(
-            `Handled message from queue: ${worker.queue}, data: ${
-              new TextDecoder().decode(data)
-            }, message is acked`,
-          );
         } catch (error) {
           log.error(error);
           log.error(
@@ -93,7 +83,6 @@ export async function sendToQueue(
   if (!channel) {
     throw new Error("Call initRabbit first");
   }
-
   await channel.publish(
     { routingKey: queue },
     { contentType: "application/json" },

@@ -1,4 +1,4 @@
-import * as log from "https://deno.land/std@0.76.0/log/mod.ts";
+import * as log from "https://deno.land/std@0.82.0/log/mod.ts";
 
 import { buildUrl } from "../utils.ts";
 import { sendToRecipeParser } from "../workers/recipeParser.ts";
@@ -43,7 +43,7 @@ export async function getAllRecipesSlugs(
   const url = buildUrl({ page });
   const result = await fetch(url);
 
-  const slugsList = parseAllRecipesSlugs(await result.text());
+  const slugsList = await parseAllRecipesSlugs(await result.text());
   return {
     page,
     slugsList,
