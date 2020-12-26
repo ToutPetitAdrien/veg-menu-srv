@@ -22,19 +22,22 @@ const INSTRUCTIONS_TEXT_SELECTOR = "span.wpurp-recipe-instruction-text";
 
 import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
 
-export const parseRecipe = async (html: string): Omit<Recipe, "slug" | "createdAtTimestamp"> => {
+export const parseRecipe = (html: string): Omit<Recipe, "slug" | "createdAtTimestamp"> => {
   const root = new DOMParser().parseFromString(
     html,
     "text/html",
   );
+  if (!root) {
+    throw new Error("Parsed DOM is null")
+  }
   const title = root.querySelector(TITLE_SELECTOR)?.textContent;
   const description = root.querySelector(DESCRIPTION_SELECTOR)?.textContent;
   const photoUrl = root.querySelector(PHOTO_SELECTOR)?.getAttribute("src");
   const createdAt = root.querySelector(CREATED_AT_SELECTOR)?.getAttribute("datetime");
   
-  const preparationTime = R.head(root.querySelectorAll(PREPARATION_TIME_SELECTOR)).textContent;
-  const cookingTime = R.head(root.querySelectorAll(COOKING_TIME_SELECTOR)).textContent;
-  const servings = root.querySelector(SERVINGS_SELECTOR)?.getAttribute("value");
+  const preparationTime = R.head(root.querySelectorAll(PREPARATION_TIME_SELECTOR))?.textContent;
+  const cookingTime = R.head(root.querySelectorAll(COOKING_TIME_SELECTOR))?.textContent;
+  const servings = Number(root.querySelector(SERVINGS_SELECTOR)?.getAttribute("value"));
 
   let ingredients: Array<Ingredient> = [];
   let otherIngredients: Array<Ingredient> = [];
@@ -80,7 +83,14 @@ export const parseRecipe = async (html: string): Omit<Recipe, "slug" | "createdA
   for (const instructionSelector of instructionsItemSelector) {
     const text =
       instructionSelector.querySelector(INSTRUCTIONS_TEXT_SELECTOR)?.textContent;
+    if (!text) {
+      continue;
+    }
     instructions.push(text);
+  }
+
+  if (!title || !photoUrl || !createdAt || !servings) {
+    throw new Error(`Miss some critical recipe's info to make parsing successful, title: ${title}, description: ${description}, photoUrl: ${photoUrl}, createdAt: ${createdAt}, servings: ${servings}`)
   }
   
   return {

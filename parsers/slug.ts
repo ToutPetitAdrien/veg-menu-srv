@@ -1,5 +1,3 @@
-import { buildUrl } from "../utils.ts";
-
 import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
 
 export const parseAllRecipesSlugs = async (
