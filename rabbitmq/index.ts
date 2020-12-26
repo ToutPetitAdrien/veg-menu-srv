@@ -4,7 +4,11 @@ import { Queue } from "../types.ts";
 import * as fs from "https://deno.land/std@0.79.0/fs/mod.ts";
 
 const {
-  CLOUDAMQP_URL,
+  CLOUDAMQP_HOSTNAME,
+  CLOUDAMQP_PORT,
+  CLOUDAMQP_USERNAME,
+  CLOUDAMQP_PASSWORD,
+  CLOUDAMQP_VHOST,
 } = Deno.env.toObject();
 
 let channel: AmqpChannel;
@@ -21,7 +25,14 @@ async function initTopology(): Promise<void> {
 
 export async function initRabbit(): Promise<void> {
   try {
-    const conn = await connect(CLOUDAMQP_URL);
+    const conn = await connect({
+      hostname: CLOUDAMQP_HOSTNAME,
+      port: +CLOUDAMQP_PORT,
+      username: CLOUDAMQP_USERNAME,
+      password: CLOUDAMQP_PASSWORD,
+      vhost: CLOUDAMQP_VHOST,
+      loglevel: "none",
+    });
     channel = await conn.openChannel();
   } catch (error) {
     return Promise.reject(error);

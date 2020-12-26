@@ -10,7 +10,7 @@ const { PORT } = Deno.env.toObject();
 (async () => {
   try {
     const [app, ...rest] = await Promise.all(
-      [initHttp()],
+      [initHttp(), initRedis(), initRabbit(), initAlgolia()],
     );
     app.addEventListener("listen", ({ hostname, port, secure }) => {
       log.info(
