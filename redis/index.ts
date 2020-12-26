@@ -1,5 +1,5 @@
 import { connect, parseURL } from "https://deno.land/x/redis/mod.ts";
-import * as log from "https://deno.land/std@0.82.0/log/mod.ts";
+import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
 
 const { REDIS_URL } = Deno.env.toObject();
 const options = parseURL(REDIS_URL);

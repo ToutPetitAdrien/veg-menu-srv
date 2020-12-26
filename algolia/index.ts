@@ -1,5 +1,5 @@
 import algoliasearch from "https://cdn.jsdelivr.net/npm/deno-algoliasearch2@4.8.3/dist/algoliasearch.esm.browser.js";
-import * as log from "https://deno.land/std@0.82.0/log/mod.ts";
+import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
 
 const { ALGOLIASEARCH_APPLICATION_ID } = Deno.env.toObject();
 const { ALGOLIASEARCH_API_KEY } = Deno.env.toObject();

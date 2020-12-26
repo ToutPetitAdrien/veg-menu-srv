@@ -1,4 +1,4 @@
-import * as log from "https://deno.land/std@0.82.0/log/mod.ts";
+import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
 import { baseUrl } from "../constants.ts";
 
 export async function api(path: string): Promise<string> {
