@@ -3,7 +3,7 @@ import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
 
 import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
 
-export const parsePagesNumber = async (html: string): Promise<number> => {
+export const parsePagesNumber = (html: string): number => {
   const root = new DOMParser().parseFromString(
     html,
     "text/html",

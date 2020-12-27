@@ -1,4 +1,4 @@
-export interface PageSlugsRecipes {
+export interface PageSlugs {
   page: number;
   slugsList: Array<string>;
 }
@@ -29,6 +29,17 @@ export interface Recipe {
   instructions: Array<string>;
   createdAt: string;
   createdAtTimestamp: number;
+}
+
+export interface WeeklyMenu {
+  title: string
+  slug: string
+  description?: string
+  photoUrl?: string
+  url: string
+  date: string
+  dateTimestamp: number
+  dailyMenus: Array<Array<Recipe>>
 }
 
 export interface Ingredient {
