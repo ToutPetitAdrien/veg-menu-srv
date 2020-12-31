@@ -4,7 +4,7 @@ import { sendToRecipeIndexer } from "./recipeIndexer.ts";
 import { dateToTimestamp } from "../utils.ts";
 import { parseRecipe } from "../parsers/recipe.ts";
 import { Recipe } from "../types.ts";
-import { api } from "../api/index.ts";
+import { baseUrl } from "../constants.ts";
 
 export const queue = Queue.RecipeParser;
 
@@ -18,7 +18,8 @@ export async function work(slug: string): Promise<void> {
 }
 
 export async function getRecipe(slug: string): Promise<Recipe> {
-  const html = await api(`/recettes/${slug}`);
+  const result = await fetch(`${baseUrl}/recettes/${slug}`);
+  return await result.text();
   const recipe = parseRecipe(html);
   const createdAtTimestamp = dateToTimestamp(recipe.createdAt);
 

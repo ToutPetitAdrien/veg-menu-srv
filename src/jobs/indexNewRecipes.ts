@@ -5,7 +5,7 @@ import { sendToRecipeParser } from "../workers/recipeParser.ts";
 import { PageSlugsRecipes } from "../types.ts";
 import { parsePagesNumber } from "../parsers/page.ts";
 import { parseAllRecipesSlugs } from "../parsers/slug.ts";
-import { isRecipeAlreadyIndexed } from "../utils/index.ts";
+import { isRecipeAlreadyIndexed } from "../utils.ts";
 
 export async function main(): Promise<void> {
   const nbPages = await getPagesNumber();

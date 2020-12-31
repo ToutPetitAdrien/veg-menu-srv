@@ -5,7 +5,7 @@ const { ALGOLIASEARCH_APPLICATION_ID } = Deno.env.toObject();
 const { ALGOLIASEARCH_API_KEY } = Deno.env.toObject();
 
 const algoliaConfig = JSON.parse(Deno.readTextFileSync("algolia/config.json"));
-import * as fetch from "../requests/index.ts";
+import * as fetch from "./requests.ts";
 
 const client = algoliasearch(
   ALGOLIASEARCH_APPLICATION_ID,
@@ -54,6 +54,6 @@ export async function saveObjects(
   );
 
   indices[index].saveObjects(objects).then(({ objectIDs }: any) => {
-    log.info(`${objectIDs} has been saved in Algolia`)
+    log.info(`${objectIDs} has been saved in Algolia`);
   });
 }

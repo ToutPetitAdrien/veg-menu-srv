@@ -1,6 +1,6 @@
 import { AmqpChannel, connect } from "https://deno.land/x/amqp/mod.ts";
 import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
-import { Queue } from "../types.ts";
+import { Queue } from "./types.ts";
 import * as fs from "https://deno.land/std@0.79.0/fs/mod.ts";
 
 const {
