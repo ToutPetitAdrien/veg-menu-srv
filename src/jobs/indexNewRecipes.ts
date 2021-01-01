@@ -1,4 +1,4 @@
-import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
+import { log } from "../../deps.ts";
 
 import { buildUrl } from "../utils.ts";
 import { sendToRecipeParser } from "../workers/recipeParser.ts";
@@ -20,6 +20,7 @@ export async function main(): Promise<void> {
 
     for (const slug of result.slugsList) {
       if (!(await isRecipeAlreadyIndexed(slug))) {
+
         await sendToRecipeParser(slug);
       }
     }

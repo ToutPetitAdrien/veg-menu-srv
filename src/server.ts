@@ -1,12 +1,8 @@
-import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
+import { log, Application, oakCors } from "../deps.ts";
 
 import { initRabbit } from "./rabbitmq.ts";
 import { initAlgolia } from "./algolia.ts";
 import { initRedis } from "./redis.ts";
-
-import { Application } from "https://deno.land/x/oak/mod.ts";
-import { oakCors } from "https://deno.land/x/cors/mod.ts";
-import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
 
 const { PORT } = Deno.env.toObject();
 

@@ -1,4 +1,4 @@
-import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
+import { log } from "../deps.ts";
 
 import { baseUrl } from "./constants.ts";
 import { hasKey } from "./redis.ts";

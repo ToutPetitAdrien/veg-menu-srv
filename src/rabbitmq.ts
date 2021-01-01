@@ -1,7 +1,6 @@
-import { AmqpChannel, connect } from "https://deno.land/x/amqp/mod.ts";
-import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
+import { log, fs, rabbitConnect, AmqpChannel } from "../deps.ts";
+
 import { Queue } from "./types.ts";
-import * as fs from "https://deno.land/std@0.79.0/fs/mod.ts";
 
 const {
   CLOUDAMQP_HOSTNAME,
@@ -25,7 +24,7 @@ async function initTopology(): Promise<void> {
 
 export async function initRabbit(): Promise<void> {
   try {
-    const conn = await connect({
+    const conn = await rabbitConnect({
       hostname: CLOUDAMQP_HOSTNAME,
       port: +CLOUDAMQP_PORT,
       username: CLOUDAMQP_USERNAME,

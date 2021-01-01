@@ -1,5 +1,4 @@
-import * as R from "https://x.nest.land/ramda@0.27.0/source/index.js";
-import * as log from "https://deno.land/std@0.74.0/log/mod.ts";
+import { R, DOMParser } from "../../deps.ts";
 
 import { Ingredient, Recipe } from "../types.ts";
 import { parseIngredient } from "./ingredient.ts";
@@ -18,8 +17,6 @@ const INGREDIENTS_LIST_SELECTOR = "wpurp-recipe-ingredient-container";
 const INGREDIENTS_LIST_ITEM_SELECTOR = "wpurp-recipe-ingredient";
 const INSTRUCTIONS_ITEM_SELECTOR = "wpurp-recipe-instruction";
 const INSTRUCTIONS_TEXT_SELECTOR = "span.wpurp-recipe-instruction-text";
-
-import { DOMParser } from "https://deno.land/x/deno_dom/deno-dom-wasm.ts";
 
 export const parseRecipe = (
   html: string,

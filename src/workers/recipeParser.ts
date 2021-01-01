@@ -1,4 +1,4 @@
-import { sendToQueue } from "../rabbitmq/index.ts";
+import { sendToQueue } from "../rabbitmq.ts";
 import { Queue } from "../types.ts";
 import { sendToRecipeIndexer } from "./recipeIndexer.ts";
 import { dateToTimestamp } from "../utils.ts";
@@ -19,8 +19,7 @@ export async function work(slug: string): Promise<void> {
 
 export async function getRecipe(slug: string): Promise<Recipe> {
   const result = await fetch(`${baseUrl}/recettes/${slug}`);
-  return await result.text();
-  const recipe = parseRecipe(html);
+  const recipe = parseRecipe(await result.text());
   const createdAtTimestamp = dateToTimestamp(recipe.createdAt);
 
   const fullRecipe: Recipe = {
