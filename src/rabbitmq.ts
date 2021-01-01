@@ -40,7 +40,7 @@ export async function initRabbit(): Promise<void> {
   await initTopology();
 
   let workerPaths: Array<string> = [];
-  for (const file of fs.expandGlobSync("workers/**/*.ts")) {
+  for (const file of fs.expandGlobSync("src/workers/**/*.ts")) {
     workerPaths = [...workerPaths, file.path];
   }
 
