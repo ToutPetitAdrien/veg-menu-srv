@@ -1,9 +1,8 @@
-import { connect, parseURL } from "https://deno.land/x/redis/mod.ts";
-import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
+import { log, redisConnect, parseURL } from "../deps.ts";
 
 const { REDIS_URL } = Deno.env.toObject();
 const options = parseURL(REDIS_URL);
-const client = connect(options);
+const client = redisConnect(options);
 
 export async function initRedis(): Promise<void> {
   const redis = await client;

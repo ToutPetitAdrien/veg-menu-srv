@@ -1,7 +1,7 @@
 import { Index, Queue, Recipe } from "../types.ts";
-import { sendToQueue } from "../rabbitmq/index.ts";
-import { saveObjects } from "../algolia/index.ts";
-import { setKey } from "../redis/index.ts";
+import { sendToQueue } from "../rabbitmq.ts";
+import { saveObjects } from "../algolia.ts";
+import { setKey } from "../redis.ts";
 
 export const queue = Queue.RecipeIndexer;
 

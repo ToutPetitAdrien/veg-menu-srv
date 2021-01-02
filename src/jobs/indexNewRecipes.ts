@@ -1,11 +1,11 @@
-import * as log from "https://deno.land/std@0.79.0/log/mod.ts";
+import { log } from "../../deps.ts";
 
 import { buildUrl } from "../utils.ts";
 import { sendToRecipeParser } from "../workers/recipeParser.ts";
 import { PageSlugsRecipes } from "../types.ts";
 import { parsePagesNumber } from "../parsers/page.ts";
 import { parseAllRecipesSlugs } from "../parsers/slug.ts";
-import { isRecipeAlreadyIndexed } from "../utils/index.ts";
+import { isRecipeAlreadyIndexed } from "../utils.ts";
 
 export async function main(): Promise<void> {
   const nbPages = await getPagesNumber();
@@ -20,6 +20,7 @@ export async function main(): Promise<void> {
 
     for (const slug of result.slugsList) {
       if (!(await isRecipeAlreadyIndexed(slug))) {
+
         await sendToRecipeParser(slug);
       }
     }
