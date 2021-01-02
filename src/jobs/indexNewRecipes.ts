@@ -7,7 +7,11 @@ import { parsePagesNumber } from "../parsers/page.ts";
 import { parseAllRecipesSlugs } from "../parsers/slug.ts";
 import { isRecipeAlreadyIndexed } from "../utils.ts";
 
+import { redisService } from "../redis.ts";
+
 export async function main(): Promise<void> {
+  const redis = redisService();
+
   const nbPages = await getPagesNumber();
   const nbPagesByJob = 1;
   for (let i = 0; i < nbPagesByJob; i++) {
@@ -20,7 +24,6 @@ export async function main(): Promise<void> {
 
     for (const slug of result.slugsList) {
       if (!(await isRecipeAlreadyIndexed(slug))) {
-
         await sendToRecipeParser(slug);
       }
     }

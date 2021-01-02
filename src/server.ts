@@ -1,8 +1,4 @@
-import { log, Application, oakCors } from "../deps.ts";
-
-import { initRabbit } from "./rabbitmq.ts";
-import { initAlgolia } from "./algolia.ts";
-import { initRedis } from "./redis.ts";
+import { Application, log, oakCors } from "../deps.ts";
 
 const { PORT } = Deno.env.toObject();
 

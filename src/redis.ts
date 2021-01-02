@@ -1,43 +1,59 @@
-import { log, redisConnect, parseURL } from "../deps.ts";
+import { log, parseURL, redisConnect } from "../deps.ts";
 
 const { REDIS_URL } = Deno.env.toObject();
 const options = parseURL(REDIS_URL);
 const client = redisConnect(options);
 
-export async function initRedis(): Promise<void> {
-  const redis = await client;
-  if (redis.isConnected) {
-    return;
-  }
-  return Promise.reject(new Error("Call initRedis first"));
-}
+export type RedisService = {
+  initRedis: () => Promise<void>;
+  setKey: (key: string, data: unknown) => Promise<void>;
+  hasKey: (key: string) => Promise<boolean>;
+  getKey: (key: string) => Promise<string | null>;
+};
 
-export async function setKey(key: string, data: unknown): Promise<void> {
-  const redis = await client;
-  if (!redis.isConnected || redis.isClosed) {
-    throw new Error("Call initRedis first");
-  }
+export const redisService = (): RedisService => {
+  const initRedis = async (): Promise<void> => {
+    const redis = await client;
+    if (redis.isConnected) {
+      return;
+    }
+    return Promise.reject(new Error("Call initRedis first"));
+  };
 
-  log.info(`Saving ${key}: ${JSON.stringify(data)} in Redis...`);
-  redis.set(key, data as string);
-}
+  const setKey = async (key: string, data: unknown): Promise<void> => {
+    const redis = await client;
+    if (!redis.isConnected || redis.isClosed) {
+      throw new Error("Call initRedis first");
+    }
 
-export async function getKey(key: string): Promise<string | null> {
-  const redis = await client;
-  if (!redis.isConnected || redis.isClosed) {
-    throw new Error("Call initRedis first");
-  }
+    log.info(`Saving ${key}: ${JSON.stringify(data)} in Redis...`);
+    redis.set(key, data as string);
+  };
 
-  const data = await redis.get(key);
-  if (!data) {
-    return null;
-  }
+  const getKey = async (key: string): Promise<string | null> => {
+    const redis = await client;
+    if (!redis.isConnected || redis.isClosed) {
+      throw new Error("Call initRedis first");
+    }
 
-  return data;
-}
+    const data = await redis.get(key);
+    if (!data) {
+      return null;
+    }
 
-export async function hasKey(key: string): Promise<boolean> {
-  const value = await getKey(key);
+    return data;
+  };
 
-  return !!value;
-}
+  const hasKey = async (key: string): Promise<boolean> => {
+    const value = await getKey(key);
+
+    return !!value;
+  };
+
+  return {
+    initRedis,
+    setKey,
+    hasKey,
+    getKey,
+  };
+};

@@ -1,4 +1,4 @@
-import { R, DOMParser } from "../../deps.ts";
+import { DOMParser, R } from "../../deps.ts";
 
 import { Ingredient, Recipe } from "../types.ts";
 import { parseIngredient } from "./ingredient.ts";

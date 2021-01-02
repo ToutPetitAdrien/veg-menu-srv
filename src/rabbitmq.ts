@@ -1,4 +1,4 @@
-import { log, fs, rabbitConnect, AmqpChannel } from "../deps.ts";
+import { AmqpChannel, fs, log, rabbitConnect } from "../deps.ts";
 
 import { Queue } from "./types.ts";
 

@@ -1,4 +1,4 @@
-import { R, log, DOMParser } from "../../deps.ts";
+import { DOMParser, log, R } from "../../deps.ts";
 
 export const parsePagesNumber = async (html: string): Promise<number> => {
   const root = new DOMParser().parseFromString(

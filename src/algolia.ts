@@ -1,11 +1,13 @@
-import { log, algoliasearch } from "../deps.ts";
+import { algoliasearch, log } from "../deps.ts";
 
 import * as fetch from "./requests.ts";
 
 const { ALGOLIASEARCH_APPLICATION_ID } = Deno.env.toObject();
 const { ALGOLIASEARCH_API_KEY } = Deno.env.toObject();
 
-const algoliaConfig = JSON.parse(Deno.readTextFileSync("src/config/algolia.json"));
+const algoliaConfig = JSON.parse(
+  Deno.readTextFileSync("src/config/algolia.json"),
+);
 
 const client = algoliasearch(
   ALGOLIASEARCH_APPLICATION_ID,

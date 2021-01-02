@@ -1,10 +1,12 @@
 import { initRabbit } from "./rabbitmq.ts";
 import { initAlgolia } from "./algolia.ts";
-import { initRedis } from "./redis.ts";
+
+import { redisService } from "./redis.ts";
 
 async function execScript(scriptPath: string) {
   const script = await import(scriptPath);
-  await Promise.all([initRedis(), initRabbit(), initAlgolia()]);
+  const redis = redisService();
+  await Promise.all([redis.initRedis(), initRabbit(), initAlgolia()]);
   await script.main();
 }
 
